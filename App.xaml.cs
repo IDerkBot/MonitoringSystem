@@ -1,6 +1,7 @@
 ﻿using System.Windows;
 using SystemMonitoring.Classes;
 using SystemMonitoring.Pages;
+using SystemMonitoring.Views.Pages;
 
 namespace SystemMonitoring
 {

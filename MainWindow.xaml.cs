@@ -26,8 +26,8 @@ namespace SystemMonitoring
         private void ChangedSizeWindow(object sender, SizeChangedEventArgs e)
         {
             if(MainW.WindowState == WindowState.Maximized) 
-                DB.SizeWindow = SystemParameters.PrimaryScreenWidth;
-            else DB.SizeWindow = MainW.Width;
+                Data.SizeWindow = SystemParameters.PrimaryScreenWidth;
+            else Data.SizeWindow = MainW.Width;
         }
         private void MainW_Closed(object sender, EventArgs e)
         {

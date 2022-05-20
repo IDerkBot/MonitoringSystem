@@ -75,7 +75,9 @@
     <Reference Include="Renci.SshNet, Version=2020.0.1.0, Culture=neutral, PublicKeyToken=1cee9f8bde3db106, processorArchitecture=MSIL">
       <HintPath>packages\SSH.NET.2020.0.1\lib\net40\Renci.SshNet.dll</HintPath>
     </Reference>
-    <Reference Include="System" />
+    <Reference Include="System">
+      <HintPath>..\..\..\..\..\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8\System.dll</HintPath>
+    </Reference>
     <Reference Include="System.ComponentModel" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Configuration" />
@@ -120,93 +122,103 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Classes\Arduino.cs" />
+    <Compile Include="Models\Arduino.cs" />
     <Compile Include="Models\Entity\Culture.cs">
-      <DependentUpon>Database.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Entity\Database.Context.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Database.Context.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Entity\Database.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Database.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Entity\Database.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Database.edmx</DependentUpon>
+      <DependentUpon>Server.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Entity\Fertilizer.cs">
-      <DependentUpon>Database.tt</DependentUpon>
+      <DependentUpon>Server.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Entity\Field.cs">
-      <DependentUpon>Database.tt</DependentUpon>
+      <DependentUpon>Server.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Entity\Seed.cs">
-      <DependentUpon>Database.tt</DependentUpon>
+      <DependentUpon>Server.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Entity\SeedFertilizer.cs">
+      <DependentUpon>Server.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Entity\Server.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Server.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Entity\Server.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Server.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Entity\Server.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Server.edmx</DependentUpon>
     </Compile>
     <Compile Include="Models\Entity\TypeGround.cs">
-      <DependentUpon>Database.tt</DependentUpon>
+      <DependentUpon>Server.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Entity\User.cs">
-      <DependentUpon>Database.tt</DependentUpon>
+      <DependentUpon>Server.tt</DependentUpon>
     </Compile>
-    <Compile Include="Pages\AddSensor.xaml.cs">
+    <Compile Include="Views\Pages\AddSensor.xaml.cs">
       <DependentUpon>AddSensor.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pages\Cultures.xaml.cs">
-      <DependentUpon>Cultures.xaml</DependentUpon>
+    <Compile Include="Views\Pages\CulturesPage.xaml.cs">
+      <DependentUpon>CulturesPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pages\Reg.xaml.cs">
+    <Compile Include="Views\Pages\FertilizerPage.xaml.cs">
+      <DependentUpon>FertilizerPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Pages\Reg.xaml.cs">
       <DependentUpon>Reg.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Classes\FieldData.cs" />
-    <Compile Include="Classes\ColorFlat.cs" />
-    <Compile Include="Classes\FileManager.cs" />
-    <Compile Include="Pages\AddDistrict.xaml.cs">
+    <Compile Include="Models\FieldData.cs" />
+    <Compile Include="Models\ColorFlat.cs" />
+    <Compile Include="Models\FileManager.cs" />
+    <Compile Include="Views\Pages\AddDistrict.xaml.cs">
       <DependentUpon>AddDistrict.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pages\AddField.xaml.cs">
+    <Compile Include="Views\Pages\AddField.xaml.cs">
       <DependentUpon>AddField.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pages\Reports.xaml.cs">
+    <Compile Include="Views\Pages\Reports.xaml.cs">
       <DependentUpon>Reports.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pages\Users.xaml.cs">
+    <Compile Include="Views\Pages\Users.xaml.cs">
       <DependentUpon>Users.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Classes\Sensor.cs" />
-    <Compile Include="Classes\Settings.cs" />
-    <Compile Include="Pages\Map.xaml.cs">
+    <Compile Include="Models\Sensor.cs" />
+    <Compile Include="Models\Settings.cs" />
+    <Compile Include="Views\Pages\Map.xaml.cs">
       <DependentUpon>Map.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\SensorDetails.xaml.cs">
       <DependentUpon>SensorDetails.xaml</DependentUpon>
     </Compile>
-    <Page Include="Pages\AddSensor.xaml">
+    <Page Include="Views\Pages\AddSensor.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Pages\Cultures.xaml">
+    <Page Include="Views\Pages\CulturesPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Pages\Auth.xaml">
+    <Page Include="Views\Pages\Auth.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Pages\Reg.xaml">
+    <Page Include="Views\Pages\FertilizerPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Pages\FieldMonitoring.xaml">
+    <Page Include="Views\Pages\Reg.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Pages\FieldSelect.xaml">
+    <Page Include="Views\Pages\FieldMonitoring.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Pages\FieldSelect.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -218,41 +230,41 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Pages\Auth.xaml.cs">
+    <Compile Include="Views\Pages\Auth.xaml.cs">
       <DependentUpon>Auth.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Models\DB.cs" />
-    <Compile Include="Pages\FieldMonitoring.xaml.cs">
+    <Compile Include="Models\Data.cs" />
+    <Compile Include="Views\Pages\FieldMonitoring.xaml.cs">
       <DependentUpon>FieldMonitoring.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pages\FieldSelect.xaml.cs">
+    <Compile Include="Views\Pages\FieldSelect.xaml.cs">
       <DependentUpon>FieldSelect.xaml</DependentUpon>
     </Compile>
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="Pages\Map.xaml">
+    <Page Include="Views\Pages\Map.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Pages\AdminMenu.xaml">
+    <Page Include="Views\Pages\AdminMenu.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Pages\AddDistrict.xaml">
+    <Page Include="Views\Pages\AddDistrict.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Pages\AddField.xaml">
+    <Page Include="Views\Pages\AddField.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Pages\Reports.xaml">
+    <Page Include="Views\Pages\Reports.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Pages\Users.xaml">
+    <Page Include="Views\Pages\Users.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -262,8 +274,8 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Classes\ManagerPage.cs" />
-    <Compile Include="Pages\AdminMenu.xaml.cs">
+    <Compile Include="Models\ManagerPage.cs" />
+    <Compile Include="Views\Pages\AdminMenu.xaml.cs">
       <DependentUpon>AdminMenu.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -286,12 +298,12 @@
     <EmbeddedResource Include="Properties\Resources.ru.resx">
       <DependentUpon>Resources.resx</DependentUpon>
     </EmbeddedResource>
-    <EntityDeploy Include="Models\Entity\Database.edmx">
+    <EntityDeploy Include="Models\Entity\Server.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>Database.Designer.cs</LastGenOutput>
+      <LastGenOutput>Server.Designer.cs</LastGenOutput>
     </EntityDeploy>
-    <None Include="Models\Entity\Database.edmx.diagram">
-      <DependentUpon>Database.edmx</DependentUpon>
+    <None Include="Models\Entity\Server.edmx.diagram">
+      <DependentUpon>Server.edmx</DependentUpon>
     </None>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
@@ -333,19 +345,17 @@
   <ItemGroup>
     <Resource Include="icons\Save.png" />
   </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
-    <Folder Include="Views\" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Models\Entity\Database.Context.tt">
+    <Content Include="Models\Entity\Server.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>Database.Context.cs</LastGenOutput>
-      <DependentUpon>Database.edmx</DependentUpon>
+      <DependentUpon>Server.edmx</DependentUpon>
+      <LastGenOutput>Server.Context.cs</LastGenOutput>
     </Content>
-    <Content Include="Models\Entity\Database.tt">
+    <Content Include="Models\Entity\Server.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>Database.edmx</DependentUpon>
-      <LastGenOutput>Database.cs</LastGenOutput>
+      <DependentUpon>Server.edmx</DependentUpon>
+      <LastGenOutput>Server.cs</LastGenOutput>
     </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
