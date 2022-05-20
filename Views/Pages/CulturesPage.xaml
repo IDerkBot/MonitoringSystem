@@ -1,0 +1,105 @@
+﻿<Page
+    x:Class="SystemMonitoring.Views.Pages.CulturesPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
+    Title="CulturesPage"
+    Width="auto"
+    d:DesignHeight="850"
+    mc:Ignorable="d">
+    <!--  TODO  -->
+    <ScrollViewer>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+
+            <StackPanel Margin="50,0,0,0" Orientation="Horizontal">
+                <ComboBox
+                    Name="CbCultures"
+                    Width="250"
+                    Margin="5,0"
+                    md:HintAssist.Hint="Культура"
+                    md:HintAssist.IsFloating="True"
+                    SelectionChanged="SelectCultureSeed_SelectionChanged" />
+                <ComboBox
+                    Name="CbStatuses"
+                    Width="250"
+                    Margin="5,0"
+                    md:HintAssist.Hint="Статус"
+                    md:HintAssist.IsFloating="True"
+                    IsEnabled="False" />
+                <Button
+                    x:Name="FilterCulture"
+                    Margin="5"
+                    Click="FilterCulture_Click"
+                    Content="Фильтровать" />
+            </StackPanel>
+
+            <DataGrid
+                x:Name="DgCultures"
+                Grid.Row="1"
+                AutoGenerateColumns="False"
+                IsReadOnly="True">
+                <DataGrid.Columns>
+                    <DataGridTextColumn
+                        Width="*"
+                        Binding="{Binding Name}"
+                        Header="Культура" />
+                    <DataGridTextColumn
+                        Width="*"
+                        Binding="{Binding Status}"
+                        Header="Статус посева" />
+                    <DataGridTextColumn
+                        Width="*"
+                        Binding="{Binding Period}"
+                        Header="Период" />
+                    <DataGridTextColumn
+                        Width="*"
+                        Binding="{Binding Temperature}"
+                        Header="Температура" />
+                    <DataGridTextColumn
+                        Width="*"
+                        Binding="{Binding Humidity}"
+                        Header="Влажность" />
+                    <DataGridTextColumn
+                        Width="*"
+                        Binding="{Binding Phosphor}"
+                        Header="Фосфор" />
+                    <DataGridTextColumn
+                        Width="*"
+                        Binding="{Binding Calcium}"
+                        Header="Кальций" />
+                    <DataGridTextColumn
+                        Width="*"
+                        Binding="{Binding Potassium}"
+                        Header="Калий" />
+                    <DataGridTextColumn
+                        Width="*"
+                        Binding="{Binding Nitrogen}"
+                        Header="Азот" />
+                    <DataGridTextColumn
+                        Width="*"
+                        Binding="{Binding Magnesium}"
+                        Header="Магний" />
+                    <DataGridTextColumn
+                        Width="*"
+                        Binding="{Binding Ph}"
+                        Header="Кислотность" />
+                    <DataGridTemplateColumn>
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <Button Click="Edit_Click">
+                                    <md:PackIcon Kind="Pencil" />
+                                </Button>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                </DataGrid.Columns>
+            </DataGrid>
+        </Grid>
+    </ScrollViewer>
+</Page>

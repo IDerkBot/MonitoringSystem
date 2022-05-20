@@ -17,12 +17,12 @@ namespace SystemMonitoring.AuthReg
             string pass_confrim = PbConfirm.Password;
             if(pass == pass_confrim)
             {
-                int user_count = dbMonitoringEntities.gc().Users.Where(x => x.Login == TbLogin.Text).Count();
+                int user_count = dbMonitoringEntities.GetContext().Users.Where(x => x.Login == TbLogin.Text).Count();
                 if (user_count == 0)
                 {
                     User user = new User() { Login = TbLogin.Text, Password = PbPassword.Password, Access = 1 };
-                    dbMonitoringEntities.gc().Users.Add(user);
-                    dbMonitoringEntities.gc().SaveChanges();
+                    dbMonitoringEntities.GetContext().Users.Add(user);
+                    dbMonitoringEntities.GetContext().SaveChanges();
                     System.Windows.Forms.MessageBox.Show(@"Вы успешно зарегистрировались");
                     ManagerPage.Page.Navigate(new Auth());
                 }

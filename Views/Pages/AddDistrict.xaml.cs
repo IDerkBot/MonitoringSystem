@@ -13,7 +13,7 @@ namespace SystemMonitoring.Pages.PagesAdd
         void Add_Click(object sender, RoutedEventArgs e)
         {
             if (string.IsNullOrWhiteSpace(DistrictName.Text)) throw new ArgumentNullException(nameof(DistrictName.Text));
-            DB.DistrictName = DistrictName.Text;
+            Data.DistrictName = DistrictName.Text;
             ManagerPage.Page.GoBack();
         }
     }

@@ -64,18 +64,18 @@ namespace SystemMonitoring.AdminEditPages
             if (error.Length > 20) { System.Windows.Forms.MessageBox.Show(error); return; }
             if (edit)
             {
-                DB.Childs.Where(x => x.ID == ID.Text).Single().Humidity = Humidity.Text;
-                DB.Childs.Where(x => x.ID == ID.Text).Single().Temperature = Temperature.Text;
-                DB.Childs.Where(x => x.ID == ID.Text).Single().Acidity = Acidity.Text;
-                DB.Childs.Where(x => x.ID == ID.Text).Single().Asot = Asot.Text;
-                DB.Childs.Where(x => x.ID == ID.Text).Single().Calcium = Calcium.Text;
-                DB.Childs.Where(x => x.ID == ID.Text).Single().Magniy = Magniy.Text;
-                DB.Childs.Where(x => x.ID == ID.Text).Single().Calium = Calium.Text;
-                DB.Childs.Where(x => x.ID == ID.Text).Single().Phosphorus = Phosphorus.Text;
+                Data.Childs.Where(x => x.ID == ID.Text).Single().Humidity = Humidity.Text;
+                Data.Childs.Where(x => x.ID == ID.Text).Single().Temperature = Temperature.Text;
+                Data.Childs.Where(x => x.ID == ID.Text).Single().Acidity = Acidity.Text;
+                Data.Childs.Where(x => x.ID == ID.Text).Single().Asot = Asot.Text;
+                Data.Childs.Where(x => x.ID == ID.Text).Single().Calcium = Calcium.Text;
+                Data.Childs.Where(x => x.ID == ID.Text).Single().Magniy = Magniy.Text;
+                Data.Childs.Where(x => x.ID == ID.Text).Single().Calium = Calium.Text;
+                Data.Childs.Where(x => x.ID == ID.Text).Single().Phosphorus = Phosphorus.Text;
             }
             else
             {
-                DB.Childs.Add(new SensorDetails
+                Data.Childs.Add(new SensorDetails
                 {
                     ID = ID.Text,
                     Humidity = Humidity.Text,

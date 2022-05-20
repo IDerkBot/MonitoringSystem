@@ -1,31 +1,22 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO;
+using System.IO.Ports;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using System.IO.Ports;
-using System.Timers;
-using System.Threading;
-using mb = System.Windows.Forms.MessageBox;
-using Excel = Microsoft.Office.Interop.Excel;
-using System.Diagnostics;
-using System.Globalization;
 using Newtonsoft.Json;
-using System.IO;
 using SystemMonitoring.Classes;
 using SystemMonitoring.Models;
 using SystemMonitoring.Models.Entity;
+using mb = System.Windows.Forms.MessageBox;
+using Excel = Microsoft.Office.Interop.Excel;
+using Page = System.Windows.Controls.Page;
 
-namespace SystemMonitoring.Pages
+namespace SystemMonitoring.Views.Pages
 {
 	public partial class FieldMonitoring : Page
 	{
@@ -41,23 +32,23 @@ namespace SystemMonitoring.Pages
 		{
 			InitializeComponent();
 			// Передаем выбранное поле
-			_selectedSeeding = dbMonitoringEntities.gc().Seeds.Single(x => x.IDField == DB.SelectSeeding.IDField);
+			_selectedSeeding = dbMonitoringEntities.GetContext().Seeds.Single(x => x.IDField == Data.SelectSeeding.IDField);
 			// Его заносим в контекст
 			DataContext = _selectedSeeding;
 				// Если культура нул
 			if (_selectedSeeding.Culture != null)
 			{
 
-				CBCulture.ItemsSource = dbMonitoringEntities.gc().Cultures.ToList().Select(x => x.Name).Distinct();
+				CBCulture.ItemsSource = dbMonitoringEntities.GetContext().Cultures.ToList().Select(x => x.Name).Distinct();
 				CBCulture.SelectedItem = _selectedSeeding.Culture.Name;
 				if (_selectedSeeding.Date == null)
 				{
-					_selectedSeeding.Date = DateTime.Now.ToString(CultureInfo.InvariantCulture).Split(' ')[0];
-					dbMonitoringEntities.gc().Seeds.Add(_selectedSeeding);
-					dbMonitoringEntities.gc().SaveChanges();
+					_selectedSeeding.Date = DateTime.Now;
+					dbMonitoringEntities.GetContext().Seeds.Add(_selectedSeeding);
+					dbMonitoringEntities.GetContext().SaveChanges();
 				}
-				_days = Math.Floor((DateTime.Now - DateTime.Parse(_selectedSeeding.Date)).TotalDays);
-				List<Culture> cultures = dbMonitoringEntities.gc().Cultures.Where(x => x.Name == _selectedSeeding.Culture.Name).ToList();
+                _days = (DateTime.Now - (DateTime)_selectedSeeding.Date).TotalDays;
+				List<Culture> cultures = dbMonitoringEntities.GetContext().Cultures.Where(x => x.Name == _selectedSeeding.Culture.Name).ToList();
 				foreach (var cult in cultures)
 				{
 					int perMin = int.Parse(cult.Period.Split('-')[0]);
@@ -71,12 +62,12 @@ namespace SystemMonitoring.Pages
 			}
 			else
 			{
-				CBCulture.ItemsSource = dbMonitoringEntities.gc().Cultures.ToList().Select(x => x.Name).Distinct();
+				CBCulture.ItemsSource = dbMonitoringEntities.GetContext().Cultures.ToList().Select(x => x.Name).Distinct();
 			}
 			Soil.ItemsSource = new List<string> { "Чернозем", "Тундровые", "Подзолистые", "Болотные", "Серые лесные", "Луговые" };
 			Soil.SelectedItem = _selectedSeeding.Field.Position;
 			var js = JsonConvert.DeserializeObject<List<SensorDetails>>(File.ReadAllText($@"{FileManager.GetAppData()}\sensors.json"));
-			DB.Childs = new List<SensorDetails>();
+			Data.Childs = new List<SensorDetails>();
 			ArduinoPortOpen();
 		}
 		#region Arduino
@@ -137,7 +128,7 @@ namespace SystemMonitoring.Pages
 				Humidity = Humidity,
 				Temperature = Temperature
 			};
-			if (DB.Childs.Any(x => x.ID.Contains(ID))) AddSensor(sensorDetails);
+			if (Data.Childs.Any(x => x.ID.Contains(ID))) AddSensor(sensorDetails);
 			_currentPort.Close();
 
 		}
@@ -196,7 +187,7 @@ namespace SystemMonitoring.Pages
 			var list = new List<SensorDetails>();
 			for (var i = 0; i < Sensors.Children.Count; i++)
 			{ list.Add(Sensors.Children[i] as SensorDetails); }
-			DB.Childs = list;
+			Data.Childs = list;
 			ManagerPage.Page.Navigate(new AdminEditPages.AddSensor());
 		}
 
@@ -211,7 +202,7 @@ namespace SystemMonitoring.Pages
 			// Установка даты в отчет
 			excelWorkSheet.Cells[4, 2] = DateTime.Now.ToShortDateString() + " года";
 
-			var field = dbMonitoringEntities.gc().Fields.Single(x => x.ID == DB.SelectSeeding.IDField);
+			var field = dbMonitoringEntities.GetContext().Fields.Single(x => x.ID == Data.SelectSeeding.IDField);
 
 			excelWorkSheet.Cells[8, 6] = field.District;
 			excelWorkSheet.Cells[9, 7] = field.Number;
@@ -270,7 +261,7 @@ namespace SystemMonitoring.Pages
 
 		private async void UploadSensor()
 		{
-			if (DB.Childs.Count > 0) await Task.Run(() => AddSensor(DB.Childs));
+			if (Data.Childs.Count > 0) await Task.Run(() => AddSensor(Data.Childs));
 		}
 		public void NavigateLoad()
 		{
@@ -281,12 +272,12 @@ namespace SystemMonitoring.Pages
 			//ArduinoPortOpen();
 			//await Task.Run(() => UploadSensor());
 			//DataContext = _selectedSeeding;
-			//foreach (SensorDetails child in DB.Child) { AddSensor(child); }
+			//foreach (SensorDetails child in Data.Child) { AddSensor(child); }
 		}
 
 		private string GetRecommendation(SensorDetails sensor)
 		{
-			var culture = dbMonitoringEntities.gc().Cultures.Single(x => x.Name == CBCulture.SelectedItem.ToString() && x.Status == Status.Content.ToString());
+			var culture = dbMonitoringEntities.GetContext().Cultures.Single(x => x.Name == CBCulture.SelectedItem.ToString() && x.Status == Status.Content.ToString());
 			var recommendation = "";
 			double _acidityMin = (culture.Ph.Contains("-")) ? Convert.ToDouble(culture.Ph.Split('-')[0]) : Convert.ToDouble(culture.Ph);
 			double _acidityMax = (culture.Ph.Contains("-")) ? Convert.ToDouble(culture.Ph.Split('-')[1]) : Convert.ToDouble(culture.Ph);
@@ -347,7 +338,7 @@ namespace SystemMonitoring.Pages
 		private void Write_Click(object sender, RoutedEventArgs e)
 		{
 			List<SensorDetails> ls = new List<SensorDetails>();
-			ls.AddRange(DB.Childs);
+			ls.AddRange(Data.Childs);
 			File.WriteAllText($@"{FileManager.GetAppData()}\sensors.json", JsonConvert.SerializeObject(ls));
 		}
 		private bool start = true;
@@ -355,23 +346,23 @@ namespace SystemMonitoring.Pages
 		{
 			if (!start)
 			{
-				_selectedSeeding.IDCulture = dbMonitoringEntities.gc().Cultures.Single(x => x.Name == CBCulture.SelectedItem.ToString() && x.Period.Contains("00")).ID;
-				_selectedSeeding.Culture = dbMonitoringEntities.gc().Cultures.Single(x => x.Name == CBCulture.SelectedItem.ToString() && x.Period.Contains("00"));
+				_selectedSeeding.IDCulture = dbMonitoringEntities.GetContext().Cultures.Single(x => x.Name == CBCulture.SelectedItem.ToString() && x.Period.Contains("00")).ID;
+				_selectedSeeding.Culture = dbMonitoringEntities.GetContext().Cultures.Single(x => x.Name == CBCulture.SelectedItem.ToString() && x.Period.Contains("00"));
 				CBCulture.IsEnabled = false;
-				_selectedSeeding.IDField = dbMonitoringEntities.gc().Fields.Single(x => x.ID == _selectedSeeding.IDField).ID;
-				_selectedSeeding.Field = dbMonitoringEntities.gc().Fields.Single(x => x.ID == _selectedSeeding.IDField);
-				_selectedSeeding.ID = DB.SelectSeeding.ID;
-				var a1 = dbMonitoringEntities.gc().Fields.Single(x => x.ID == DB.SelectSeeding.IDField);
-				var a2 = dbMonitoringEntities.gc().Cultures.Single(x => x.Name == CBCulture.SelectedItem.ToString() && x.Period.Contains("00"));
+				_selectedSeeding.IDField = dbMonitoringEntities.GetContext().Fields.Single(x => x.ID == _selectedSeeding.IDField).ID;
+				_selectedSeeding.Field = dbMonitoringEntities.GetContext().Fields.Single(x => x.ID == _selectedSeeding.IDField);
+				_selectedSeeding.ID = Data.SelectSeeding.ID;
+				var a1 = dbMonitoringEntities.GetContext().Fields.Single(x => x.ID == Data.SelectSeeding.IDField);
+				var a2 = dbMonitoringEntities.GetContext().Cultures.Single(x => x.Name == CBCulture.SelectedItem.ToString() && x.Period.Contains("00"));
 				var seeding = new Seed()
 				{
-					ID = DB.SelectSeeding.ID,
+					ID = Data.SelectSeeding.ID,
 					Field = a1,
 					Culture = a2,
-					Date = DateTime.Now.ToString(CultureInfo.InvariantCulture).Split(' ')[0]
+					Date = DateTime.Now
 				};
-				dbMonitoringEntities.gc().Seeds.Add(seeding);
-				dbMonitoringEntities.gc().SaveChanges();
+				dbMonitoringEntities.GetContext().Seeds.Add(seeding);
+				dbMonitoringEntities.GetContext().SaveChanges();
 			}
 			else
 			{
@@ -380,12 +371,12 @@ namespace SystemMonitoring.Pages
 		}
 		private void Date_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
 		{
-			_selectedSeeding.Date = (sender as DatePicker)?.SelectedDate.ToString();
-			dbMonitoringEntities.gc().Seeds.Add(_selectedSeeding);
-			dbMonitoringEntities.gc().SaveChanges();
+			_selectedSeeding.Date = (sender as DatePicker)?.SelectedDate;
+			dbMonitoringEntities.GetContext().Seeds.Add(_selectedSeeding);
+			dbMonitoringEntities.GetContext().SaveChanges();
 		}
 		private void Save_Click(object sender, RoutedEventArgs e)
-		{ File.WriteAllText(FileManager.GetSensorsJson(), JsonConvert.SerializeObject(DB.Childs)); }
+		{ File.WriteAllText(FileManager.GetSensorsJson(), JsonConvert.SerializeObject(Data.Childs)); }
 		private void SaveToExcelSensors_Click(object sender, RoutedEventArgs e)
 		{
 			var list = JsonConvert.DeserializeObject<List<SensorDetails>>(File.ReadAllText(FileManager.GetSensorsJson()));
@@ -400,7 +391,7 @@ namespace SystemMonitoring.Pages
 			// Установка даты в отчет
 			ExcelWorkSheet.Cells[4, 2] = DateTime.Now.ToShortDateString() + " года";
 
-			var field = dbMonitoringEntities.gc().Fields.Single(x => x.ID == DB.SelectSeeding.IDField);
+			var field = dbMonitoringEntities.GetContext().Fields.Single(x => x.ID == Data.SelectSeeding.IDField);
 
 			ExcelWorkSheet.Cells[8, 6] = field.District;
 			ExcelWorkSheet.Cells[9, 7] = field.Number;
@@ -440,7 +431,7 @@ namespace SystemMonitoring.Pages
 		private int GetPercent(SensorDetails sensor)
 		{
 			int max = 0;
-			var culture = dbMonitoringEntities.gc().Cultures.Where(x => x.Name == CBCulture.SelectedItem.ToString() && x.Status == Status.Content.ToString()).ToList().Single();
+			var culture = dbMonitoringEntities.GetContext().Cultures.Where(x => x.Name == CBCulture.SelectedItem.ToString() && x.Status == Status.Content.ToString()).ToList().Single();
 
 			double acidityMiddle = (culture.Ph.Contains('-')) ? (double.Parse(culture.Ph.Split('-')[0]) + double.Parse(culture.Ph.Split('-')[1])) / 2 : double.Parse(culture.Ph);
 			double acidityPercent = Math.Floor(Convert.ToDouble(sensor.Acidity) / acidityMiddle * 100);

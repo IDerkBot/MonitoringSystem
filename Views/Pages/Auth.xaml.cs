@@ -4,6 +4,7 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using SystemMonitoring.Classes;
 using SystemMonitoring.Models.Entity;
+using SystemMonitoring.Views.Pages;
 
 namespace SystemMonitoring.Pages
 {
@@ -28,7 +29,7 @@ namespace SystemMonitoring.Pages
 		}
 		private bool CheckAuthData()
 		{
-			if (dbMonitoringEntities.gc().Users.Any(x => x.Login == TbLogin.Text && x.Password == PbPassword.Password))
+			if (dbMonitoringEntities.GetContext().Users.Any(x => x.Login == TbLogin.Text && x.Password == PbPassword.Password))
 				return false;
 			MessageBox.Show("Логин или пароль не верны");
 			return true;

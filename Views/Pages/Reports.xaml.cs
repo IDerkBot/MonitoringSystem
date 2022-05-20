@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Windows;
@@ -8,12 +7,16 @@ using System.Windows.Input;
 using System.Windows.Media;
 using SystemMonitoring.Models;
 using static System.Windows.Media.Color;
+using Button = System.Windows.Controls.Button;
 using Excel = Microsoft.Office.Interop.Excel;
+using Label = System.Windows.Controls.Label;
+using Orientation = System.Windows.Controls.Orientation;
+using Page = System.Windows.Controls.Page;
 using Path = System.IO.Path;
 using WinForms = System.Windows.Forms;
 using Word = Microsoft.Office.Interop.Word;
 
-namespace SystemMonitoring.AdminPages
+namespace SystemMonitoring.Views.Pages
 {
     public partial class Reports : Page
     {
@@ -23,7 +26,7 @@ namespace SystemMonitoring.AdminPages
             //Уничтожить все объекты
             ExcelPanel.Children.Clear();
             WordPanel.Children.Clear();
-            DB.Path = path;
+            Data.Path = path;
             var filesExcel = Directory.GetFiles(path);
             var filesWord = Directory.GetFiles(path);
             var listExcel = (from file in filesExcel where Path.GetFileName(file).Contains("xlsm") || Path.GetFileName(file).Contains("xlsx") select Path.GetFileName(file)).ToList();
@@ -83,7 +86,7 @@ namespace SystemMonitoring.AdminPages
         private void OpenFile(object sender, EventArgs e)
         {
             string fileName = (sender.ToString().Contains("Button")) ? $"{(sender as Button).DataContext}" : $"{(sender as Label).DataContext}";
-            string filePath = $@"{DB.Path}{fileName}";
+            string filePath = $@"{Data.Path}{fileName}";
             if (fileName.Contains("xlsm") || fileName.Contains("xlsx"))
             {
                 Excel.Application exApp = new Excel.Application { Visible = true };
