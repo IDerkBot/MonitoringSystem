@@ -4,13 +4,12 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using SystemMonitoring.Classes;
 using SystemMonitoring.Models.Entity;
-using SystemMonitoring.Views.Pages;
 
-namespace SystemMonitoring.Pages
+namespace SystemMonitoring.Views.Pages
 {
-	public partial class Auth : Page
+	public partial class AuthPage : Page
 	{
-		public Auth() { InitializeComponent(); }
+		public AuthPage() { InitializeComponent(); }
 		private bool CheckFieldInEmpty()
 		{
 			if (TbLogin.Text.Length <= 4 || string.IsNullOrWhiteSpace(TbLogin.Text))

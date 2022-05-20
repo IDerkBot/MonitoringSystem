@@ -3,6 +3,7 @@ using System.Windows;
 using SystemMonitoring.Classes;
 using SystemMonitoring.Models;
 using SystemMonitoring.Pages;
+using SystemMonitoring.Views.Pages;
 
 namespace SystemMonitoring
 {
@@ -12,12 +13,12 @@ namespace SystemMonitoring
         {
             InitializeComponent();
             ManagerPage.Page = MainPage;
-            ManagerPage.Navigate(new Auth());
+            ManagerPage.Navigate(new AuthPage());
         }
 
         private void MainPage_ContentRendered(object sender, EventArgs e)
         {
-            if (ManagerPage.Page.Content.ToString().Contains("Auth") || ManagerPage.Page.Content.ToString().Contains("MenuPage"))
+            if (ManagerPage.Page.Content.ToString().Contains("AuthPage") || ManagerPage.Page.Content.ToString().Contains("MenuPage"))
                 Back.Visibility = Visibility.Hidden;
             else Back.Visibility = Visibility.Visible;
             if (ManagerPage.Page.Content.ToString().Contains("FieldMonitoring"))

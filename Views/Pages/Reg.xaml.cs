@@ -4,6 +4,7 @@ using System.Windows.Controls;
 using SystemMonitoring.Classes;
 using SystemMonitoring.Models.Entity;
 using SystemMonitoring.Pages;
+using SystemMonitoring.Views.Pages;
 
 namespace SystemMonitoring.AuthReg
 {
@@ -24,7 +25,7 @@ namespace SystemMonitoring.AuthReg
                     dbMonitoringEntities.GetContext().Users.Add(user);
                     dbMonitoringEntities.GetContext().SaveChanges();
                     System.Windows.Forms.MessageBox.Show(@"Вы успешно зарегистрировались");
-                    ManagerPage.Page.Navigate(new Auth());
+                    ManagerPage.Page.Navigate(new AuthPage());
                 }
                 else
                 {
@@ -40,6 +41,6 @@ namespace SystemMonitoring.AuthReg
                 System.Windows.Forms.MessageBox.Show(@"Пароли не совпадают");
             }
         }
-        void Back_Click(object sender, RoutedEventArgs e) { ManagerPage.Page.Navigate(new Auth()); }
+        void Back_Click(object sender, RoutedEventArgs e) { ManagerPage.Page.Navigate(new AuthPage()); }
     }
 }
