@@ -14,13 +14,21 @@ namespace SystemMonitoring.Models.Entity
     
     public partial class Seed
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Seed()
+        {
+            this.SeedFertilizers = new HashSet<SeedFertilizer>();
+        }
+    
         public int ID { get; set; }
         public Nullable<int> IDField { get; set; }
         public Nullable<int> IDCulture { get; set; }
         public string Status { get; set; }
-        public string Date { get; set; }
+        public Nullable<System.DateTime> Date { get; set; }
     
         public virtual Culture Culture { get; set; }
         public virtual Field Field { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<SeedFertilizer> SeedFertilizers { get; set; }
     }
 }

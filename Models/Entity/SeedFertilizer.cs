@@ -12,22 +12,13 @@ namespace SystemMonitoring.Models.Entity
     using System;
     using System.Collections.Generic;
     
-    public partial class Field
+    public partial class SeedFertilizer
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Field()
-        {
-            this.Seeds = new HashSet<Seed>();
-        }
+        public int IDSeed { get; set; }
+        public int IDFettilizaer { get; set; }
+        public Nullable<decimal> Count { get; set; }
     
-        public int ID { get; set; }
-        public string District { get; set; }
-        public string Number { get; set; }
-        public string Position { get; set; }
-        public Nullable<int> Type { get; set; }
-    
-        public virtual TypeGround TypeGround { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Seed> Seeds { get; set; }
+        public virtual Fertilizer Fertilizer { get; set; }
+        public virtual Seed Seed { get; set; }
     }
 }

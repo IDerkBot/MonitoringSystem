@@ -10,23 +10,23 @@
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Name" Type="varchar(max)" />
+          <Property Name="Name" Type="nvarchar(max)" />
           <Property Name="Status" Type="nvarchar(max)" />
           <Property Name="Period" Type="nvarchar(max)" />
-          <Property Name="Ph" Type="varchar(max)" />
-          <Property Name="Phosphor" Type="varchar(max)" />
-          <Property Name="Potassium" Type="varchar(max)" />
-          <Property Name="Magnesium" Type="varchar(max)" />
-          <Property Name="Calcium" Type="varchar(max)" />
-          <Property Name="Humidity" Type="varchar(max)" />
-          <Property Name="Nitrogen" Type="varchar(max)" />
-          <Property Name="Temperature" Type="varchar(max)" />
+          <Property Name="Ph" Type="nvarchar(max)" />
+          <Property Name="Phosphor" Type="nvarchar(max)" />
+          <Property Name="Potassium" Type="nvarchar(max)" />
+          <Property Name="Magnesium" Type="nvarchar(max)" />
+          <Property Name="Calcium" Type="nvarchar(max)" />
+          <Property Name="Humidity" Type="nvarchar(max)" />
+          <Property Name="Nitrogen" Type="nvarchar(max)" />
+          <Property Name="Temperature" Type="nvarchar(max)" />
         </EntityType>
         <EntityType Name="Fertilizer">
           <Key>
             <PropertyRef Name="ID" />
           </Key>
-          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Asot" Type="varchar(max)" />
           <Property Name="PhosphorusOxide" Type="varchar(max)" />
           <Property Name="PotassiumOxide" Type="varchar(max)" />
@@ -44,20 +44,29 @@
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="District" Type="varchar(max)" />
-          <Property Name="Number" Type="varchar(max)" />
-          <Property Name="Position" Type="varchar(max)" />
-          <Property Name="TypeGround" Type="int" />
+          <Property Name="District" Type="nvarchar(max)" />
+          <Property Name="Number" Type="nvarchar(max)" />
+          <Property Name="Position" Type="nvarchar(max)" />
+          <Property Name="Type" Type="int" />
         </EntityType>
         <EntityType Name="Seed">
           <Key>
             <PropertyRef Name="ID" />
           </Key>
-          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="IDField" Type="int" />
           <Property Name="IDCulture" Type="int" />
-          <Property Name="Status" Type="varchar(max)" />
-          <Property Name="Date" Type="varchar(max)" />
+          <Property Name="Status" Type="nvarchar(max)" />
+          <Property Name="Date" Type="date" />
+        </EntityType>
+        <EntityType Name="SeedFertilizer">
+          <Key>
+            <PropertyRef Name="IDSeed" />
+            <PropertyRef Name="IDFettilizaer" />
+          </Key>
+          <Property Name="IDSeed" Type="int" Nullable="false" />
+          <Property Name="IDFettilizaer" Type="int" Nullable="false" />
+          <Property Name="Count" Type="decimal" Precision="18" Scale="3" />
         </EntityType>
         <EntityType Name="TypeGround">
           <Key>
@@ -83,7 +92,31 @@
               <PropertyRef Name="ID" />
             </Principal>
             <Dependent Role="Field">
-              <PropertyRef Name="TypeGround" />
+              <PropertyRef Name="Type" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SeedFertilizer_Fertilizer">
+          <End Role="Fertilizer" Type="Self.Fertilizer" Multiplicity="1" />
+          <End Role="SeedFertilizer" Type="Self.SeedFertilizer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Fertilizer">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="SeedFertilizer">
+              <PropertyRef Name="IDFettilizaer" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SeedFertilizer_Seed">
+          <End Role="Seed" Type="Self.Seed" Multiplicity="1" />
+          <End Role="SeedFertilizer" Type="Self.SeedFertilizer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Seed">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="SeedFertilizer">
+              <PropertyRef Name="IDSeed" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -116,11 +149,20 @@
           <EntitySet Name="Fertilizer" EntityType="Self.Fertilizer" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Field" EntityType="Self.Field" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Seed" EntityType="Self.Seed" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SeedFertilizer" EntityType="Self.SeedFertilizer" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TypeGround" EntityType="Self.TypeGround" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_Field_TypeGround" Association="Self.FK_Field_TypeGround">
             <End Role="TypeGround" EntitySet="TypeGround" />
             <End Role="Field" EntitySet="Field" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SeedFertilizer_Fertilizer" Association="Self.FK_SeedFertilizer_Fertilizer">
+            <End Role="Fertilizer" EntitySet="Fertilizer" />
+            <End Role="SeedFertilizer" EntitySet="SeedFertilizer" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SeedFertilizer_Seed" Association="Self.FK_SeedFertilizer_Seed">
+            <End Role="Seed" EntitySet="Seed" />
+            <End Role="SeedFertilizer" EntitySet="SeedFertilizer" />
           </AssociationSet>
           <AssociationSet Name="FK_Seeding_Field" Association="Self.FK_Seeding_Field">
             <End Role="Field" EntitySet="Field" />
@@ -141,24 +183,24 @@
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="Status" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="Period" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="Ph" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="Phosphor" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="Potassium" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="Magnesium" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="Calcium" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="Humidity" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="Nitrogen" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="Temperature" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Ph" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Phosphor" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Potassium" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Magnesium" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Calcium" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Humidity" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Nitrogen" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Temperature" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Seeds" Relationship="Self.FK_Seeding_Table_1" FromRole="Culture" ToRole="Seed" />
         </EntityType>
         <EntityType Name="Fertilizer">
           <Key>
             <PropertyRef Name="ID" />
           </Key>
-          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Asot" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="PhosphorusOxide" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="PotassiumOxide" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
@@ -170,30 +212,43 @@
           <Property Name="Zincum" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="Cuprum" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="Manganum" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="SeedFertilizers" Relationship="Self.FK_SeedFertilizer_Fertilizer" FromRole="Fertilizer" ToRole="SeedFertilizer" />
         </EntityType>
         <EntityType Name="Field">
           <Key>
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="District" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="Number" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="Position" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="TypeGround" Type="Int32" />
-          <NavigationProperty Name="TypeGround1" Relationship="Self.FK_Field_TypeGround" FromRole="Field" ToRole="TypeGround" />
+          <Property Name="District" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Number" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Position" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Type" Type="Int32" />
+          <NavigationProperty Name="TypeGround" Relationship="Self.FK_Field_TypeGround" FromRole="Field" ToRole="TypeGround" />
           <NavigationProperty Name="Seeds" Relationship="Self.FK_Seeding_Field" FromRole="Field" ToRole="Seed" />
         </EntityType>
         <EntityType Name="Seed">
           <Key>
             <PropertyRef Name="ID" />
           </Key>
-          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="IDField" Type="Int32" />
           <Property Name="IDCulture" Type="Int32" />
-          <Property Name="Status" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="Date" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Status" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Date" Type="DateTime" Precision="0" />
           <NavigationProperty Name="Culture" Relationship="Self.FK_Seeding_Table_1" FromRole="Seed" ToRole="Culture" />
           <NavigationProperty Name="Field" Relationship="Self.FK_Seeding_Field" FromRole="Seed" ToRole="Field" />
+          <NavigationProperty Name="SeedFertilizers" Relationship="Self.FK_SeedFertilizer_Seed" FromRole="Seed" ToRole="SeedFertilizer" />
+        </EntityType>
+        <EntityType Name="SeedFertilizer">
+          <Key>
+            <PropertyRef Name="IDSeed" />
+            <PropertyRef Name="IDFettilizaer" />
+          </Key>
+          <Property Name="IDSeed" Type="Int32" Nullable="false" />
+          <Property Name="IDFettilizaer" Type="Int32" Nullable="false" />
+          <Property Name="Count" Type="Decimal" Precision="18" Scale="3" />
+          <NavigationProperty Name="Fertilizer" Relationship="Self.FK_SeedFertilizer_Fertilizer" FromRole="SeedFertilizer" ToRole="Fertilizer" />
+          <NavigationProperty Name="Seed" Relationship="Self.FK_SeedFertilizer_Seed" FromRole="SeedFertilizer" ToRole="Seed" />
         </EntityType>
         <EntityType Name="TypeGround">
           <Key>
@@ -224,6 +279,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_SeedFertilizer_Fertilizer">
+          <End Role="Fertilizer" Type="Self.Fertilizer" Multiplicity="1" />
+          <End Role="SeedFertilizer" Type="Self.SeedFertilizer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Fertilizer">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="SeedFertilizer">
+              <PropertyRef Name="IDFettilizaer" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Field_TypeGround">
           <End Role="TypeGround" Type="Self.TypeGround" Multiplicity="0..1" />
           <End Role="Field" Type="Self.Field" Multiplicity="*" />
@@ -232,7 +299,7 @@
               <PropertyRef Name="ID" />
             </Principal>
             <Dependent Role="Field">
-              <PropertyRef Name="TypeGround" />
+              <PropertyRef Name="Type" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -248,16 +315,33 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_SeedFertilizer_Seed">
+          <End Role="Seed" Type="Self.Seed" Multiplicity="1" />
+          <End Role="SeedFertilizer" Type="Self.SeedFertilizer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Seed">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="SeedFertilizer">
+              <PropertyRef Name="IDSeed" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="dbMonitoringEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Cultures" EntityType="Self.Culture" />
           <EntitySet Name="Fertilizers" EntityType="Self.Fertilizer" />
           <EntitySet Name="Fields" EntityType="Self.Field" />
           <EntitySet Name="Seeds" EntityType="Self.Seed" />
+          <EntitySet Name="SeedFertilizers" EntityType="Self.SeedFertilizer" />
           <EntitySet Name="TypeGrounds" EntityType="Self.TypeGround" />
           <EntitySet Name="Users" EntityType="Self.User" />
           <AssociationSet Name="FK_Seeding_Table_1" Association="Self.FK_Seeding_Table_1">
             <End Role="Culture" EntitySet="Cultures" />
             <End Role="Seed" EntitySet="Seeds" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SeedFertilizer_Fertilizer" Association="Self.FK_SeedFertilizer_Fertilizer">
+            <End Role="Fertilizer" EntitySet="Fertilizers" />
+            <End Role="SeedFertilizer" EntitySet="SeedFertilizers" />
           </AssociationSet>
           <AssociationSet Name="FK_Field_TypeGround" Association="Self.FK_Field_TypeGround">
             <End Role="TypeGround" EntitySet="TypeGrounds" />
@@ -266,6 +350,10 @@
           <AssociationSet Name="FK_Seeding_Field" Association="Self.FK_Seeding_Field">
             <End Role="Field" EntitySet="Fields" />
             <End Role="Seed" EntitySet="Seeds" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SeedFertilizer_Seed" Association="Self.FK_SeedFertilizer_Seed">
+            <End Role="Seed" EntitySet="Seeds" />
+            <End Role="SeedFertilizer" EntitySet="SeedFertilizers" />
           </AssociationSet>
         </EntityContainer>
       </Schema>
@@ -317,7 +405,7 @@
                 <ScalarProperty Name="District" ColumnName="District" />
                 <ScalarProperty Name="Number" ColumnName="Number" />
                 <ScalarProperty Name="Position" ColumnName="Position" />
-                <ScalarProperty Name="TypeGround" ColumnName="TypeGround" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -329,6 +417,15 @@
                 <ScalarProperty Name="IDCulture" ColumnName="IDCulture" />
                 <ScalarProperty Name="Status" ColumnName="Status" />
                 <ScalarProperty Name="Date" ColumnName="Date" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SeedFertilizers">
+            <EntityTypeMapping TypeName="dbMonitoringModel.SeedFertilizer">
+              <MappingFragment StoreEntitySet="SeedFertilizer">
+                <ScalarProperty Name="IDSeed" ColumnName="IDSeed" />
+                <ScalarProperty Name="IDFettilizaer" ColumnName="IDFettilizaer" />
+                <ScalarProperty Name="Count" ColumnName="Count" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

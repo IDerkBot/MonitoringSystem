@@ -14,6 +14,12 @@ namespace SystemMonitoring.Models.Entity
     
     public partial class Fertilizer
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Fertilizer()
+        {
+            this.SeedFertilizers = new HashSet<SeedFertilizer>();
+        }
+    
         public int ID { get; set; }
         public string Asot { get; set; }
         public string PhosphorusOxide { get; set; }
@@ -26,5 +32,8 @@ namespace SystemMonitoring.Models.Entity
         public string Zincum { get; set; }
         public string Cuprum { get; set; }
         public string Manganum { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<SeedFertilizer> SeedFertilizers { get; set; }
     }
 }

@@ -4,16 +4,19 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="40624ac96cec4721a887b7f3aaba47c6" Name="Diagram1">
-        <EntityTypeShape EntityType="dbMonitoringModel.Culture" Width="1.5" PointX="3" PointY="6.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="dbMonitoringModel.Fertilizer" Width="1.5" PointX="5.75" PointY="4.75" IsExpanded="true" />
+      <Diagram DiagramId="b0c8ca7ec1fe479f89b866c25b5b6a2a" Name="Diagram1">
+        <EntityTypeShape EntityType="dbMonitoringModel.Culture" Width="1.5" PointX="3" PointY="6.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="dbMonitoringModel.Fertilizer" Width="1.5" PointX="5.25" PointY="6.5" IsExpanded="true" />
         <EntityTypeShape EntityType="dbMonitoringModel.Field" Width="1.5" PointX="3" PointY="1" IsExpanded="true" />
         <EntityTypeShape EntityType="dbMonitoringModel.Seed" Width="1.5" PointX="5.25" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="dbMonitoringModel.SeedFertilizer" Width="1.5" PointX="7.5" PointY="1.25" IsExpanded="true" />
         <EntityTypeShape EntityType="dbMonitoringModel.TypeGround" Width="1.5" PointX="0.75" PointY="1.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="dbMonitoringModel.User" Width="1.5" PointX="7.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="dbMonitoringModel.User" Width="1.5" PointX="7.75" PointY="4.75" IsExpanded="true" />
         <AssociationConnector Association="dbMonitoringModel.FK_Seeding_Table_1" ManuallyRouted="false" />
+        <AssociationConnector Association="dbMonitoringModel.FK_SeedFertilizer_Fertilizer" ManuallyRouted="false" />
         <AssociationConnector Association="dbMonitoringModel.FK_Field_TypeGround" ManuallyRouted="false" />
         <AssociationConnector Association="dbMonitoringModel.FK_Seeding_Field" ManuallyRouted="false" />
+        <AssociationConnector Association="dbMonitoringModel.FK_SeedFertilizer_Seed" ManuallyRouted="false" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
