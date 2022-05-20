@@ -316,34 +316,34 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="icons\System\ArrowLeft.png" />
-    <Resource Include="icons\System\Close.png" />
-    <Resource Include="icons\System\Окно.png" />
-    <Resource Include="icons\System\Развернуть.png" />
-    <Resource Include="icons\System\Свернуть.png" />
+    <Resource Include="Views\Resources\Icons\System\ArrowLeft.png" />
+    <Resource Include="Views\Resources\Icons\System\Close.png" />
+    <Resource Include="Views\Resources\Icons\System\Окно.png" />
+    <Resource Include="Views\Resources\Icons\System\Развернуть.png" />
+    <Resource Include="Views\Resources\Icons\System\Свернуть.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="icons\Menu\Notes.png" />
-    <Resource Include="icons\Menu\Location.png" />
-    <Resource Include="icons\Menu\Notepad.png" />
-    <Resource Include="icons\Menu\User.png" />
+    <Resource Include="Views\Resources\Icons\Menu\Notes.png" />
+    <Resource Include="Views\Resources\Icons\Menu\Location.png" />
+    <Resource Include="Views\Resources\Icons\Menu\Notepad.png" />
+    <Resource Include="Views\Resources\Icons\Menu\User.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="icons\System\Account.png" />
+    <Resource Include="Views\Resources\Icons\System\Account.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="icons\System\Add.png" />
-    <Resource Include="icons\System\Question.png" />
+    <Resource Include="Views\Resources\Icons\System\Add.png" />
+    <Resource Include="Views\Resources\Icons\System\Question.png" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="icons\Excel.png" />
-    <Resource Include="icons\point.png" />
+    <Resource Include="Views\Resources\Icons\Excel.png" />
+    <Resource Include="Views\Resources\Icons\point.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="icons\Save.png" />
+    <Resource Include="Views\Resources\Icons\Save.png" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
