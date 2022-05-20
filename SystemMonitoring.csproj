@@ -248,7 +248,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\Pages\AdminMenu.xaml">
+    <Page Include="Views\Pages\MenuPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -275,8 +275,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Models\ManagerPage.cs" />
-    <Compile Include="Views\Pages\AdminMenu.xaml.cs">
-      <DependentUpon>AdminMenu.xaml</DependentUpon>
+    <Compile Include="Views\Pages\MenuPage.xaml.cs">
+      <DependentUpon>MenuPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>

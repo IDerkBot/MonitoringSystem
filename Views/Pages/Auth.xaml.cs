@@ -47,7 +47,7 @@ namespace SystemMonitoring.Pages
 			if (CheckFieldInEmpty()) return;
 			if (CheckAuthData()) return;
 			if (CbRemember.IsChecked == true) RememberData();
-			ManagerPage.Navigate(new AdminMenu());
+			ManagerPage.Navigate(new MenuPage());
 		}
 		private void KeyPress(object sender, KeyEventArgs e) { if (e.Key == Key.Enter) LogInBtn_Click(LogInBtn, null); }
 		private void OnLoad(object sender, RoutedEventArgs e)

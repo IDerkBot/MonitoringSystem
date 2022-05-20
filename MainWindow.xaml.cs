@@ -17,7 +17,7 @@ namespace SystemMonitoring
 
         private void MainPage_ContentRendered(object sender, EventArgs e)
         {
-            if (ManagerPage.Page.Content.ToString().Contains("Auth") || ManagerPage.Page.Content.ToString().Contains("AdminMenu"))
+            if (ManagerPage.Page.Content.ToString().Contains("Auth") || ManagerPage.Page.Content.ToString().Contains("MenuPage"))
                 Back.Visibility = Visibility.Hidden;
             else Back.Visibility = Visibility.Visible;
             if (ManagerPage.Page.Content.ToString().Contains("FieldMonitoring"))

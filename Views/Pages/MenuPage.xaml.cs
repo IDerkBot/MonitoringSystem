@@ -4,9 +4,9 @@ using SystemMonitoring.Pages;
 
 namespace SystemMonitoring.Views.Pages
 {
-	public partial class AdminMenu
+	public partial class MenuPage
 	{
-		public AdminMenu() { InitializeComponent(); }
+		public MenuPage() { InitializeComponent(); }
 		private void BtnMoveField_Click(object sender, RoutedEventArgs e) => ManagerPage.Navigate(new FieldSelect());
 		private void BtnMoveReports_Click(object sender, RoutedEventArgs e) => ManagerPage.Navigate(new Reports());
 		private void BtnMoveCultures_Click(object sender, RoutedEventArgs e) => ManagerPage.Navigate(new CulturesPage());

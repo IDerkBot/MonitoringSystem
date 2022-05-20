@@ -12,7 +12,7 @@ namespace SystemMonitoring
             if (ManagerPage.Page.Content.ToString().Contains("FieldMonitoring"))
                 ManagerPage.Navigate(new FieldSelect());
             if (ManagerPage.Page.Content.ToString().Contains("FieldSelect"))
-                ManagerPage.Navigate(new AdminMenu());
+                ManagerPage.Navigate(new MenuPage());
             else if (ManagerPage.Page.CanGoBack)
                 ManagerPage.Back();
         }
