@@ -310,7 +310,7 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
-    <None Include="Отчёт.xlsx" />
+    <None Include="Views\Resources\Documents\Отчёт.xlsx" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
