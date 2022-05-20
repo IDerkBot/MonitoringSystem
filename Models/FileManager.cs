@@ -10,10 +10,10 @@ namespace SystemMonitoring
         public static string GetPathConfig()
         {
             string appdataPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
-            string path = $@"{appdataPath}\{DB.DirectoryName}\{DB.ConfigName}.{DB.ConfigFormat}";
+            string path = $@"{appdataPath}\{Data.DirectoryName}\{Data.ConfigName}.{Data.ConfigFormat}";
             if (!File.Exists(path))
             {
-                if (!Directory.Exists($@"{appdataPath}\{DB.DirectoryName}\")) Directory.CreateDirectory($@"{appdataPath}\{DB.DirectoryName}\");
+                if (!Directory.Exists($@"{appdataPath}\{Data.DirectoryName}\")) Directory.CreateDirectory($@"{appdataPath}\{Data.DirectoryName}\");
                 File.Create(path).Dispose();
                 Settings settings = new Settings();
                 File.WriteAllText(path, JsonConvert.SerializeObject(settings));
@@ -25,9 +25,9 @@ namespace SystemMonitoring
         public static string GetAppData()
         {
             string appdataPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
-            string path = $@"{appdataPath}\{DB.DirectoryName}\";
+            string path = $@"{appdataPath}\{Data.DirectoryName}\";
             if (!Directory.Exists(path))
-                Directory.CreateDirectory($@"{appdataPath}\{DB.DirectoryName}\");
+                Directory.CreateDirectory($@"{appdataPath}\{Data.DirectoryName}\");
             return path;
         }
         public static string GetSensorsJson()

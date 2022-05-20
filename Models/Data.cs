@@ -3,8 +3,12 @@ using SystemMonitoring.Models.Entity;
 
 namespace SystemMonitoring.Models
 {
-    internal class DB
+    internal class Data
     {
+        public static int UserID { get; set; }
+        public static int Access { get; set; }
+        public bool IsAdmin() => Access == 1;
+        public bool IsUser() => Access == 0;
         public static string DistrictName { get; set; } 
         public static double SizeWindow { get; set; }
         public static string Path { get; set; }

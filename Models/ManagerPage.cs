@@ -1,5 +1,6 @@
 ﻿using System.Windows.Controls;
 using SystemMonitoring.Pages;
+using SystemMonitoring.Views.Pages;
 
 namespace SystemMonitoring.Classes
 {
